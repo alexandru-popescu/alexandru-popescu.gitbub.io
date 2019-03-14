@@ -1,0 +1,38 @@
+<html>
+	<head>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+		
+		<script>
+			var childWin = null;
+			var interval = null;
+			var checkClosedAndUnblock = function() {
+				if(childWin == null || childWin.closed) {
+					$.unblockUI();
+					if(interval != null) {
+						clearInterval(interval);
+						interval = null;
+					}
+				}
+			}
+			function openModal() {
+				/*if (window.showModalDialog) {
+					window.showModalDialog("https://www.w3schools.com","name","fullscreen=yes,resizable=yes,scroll=yes");
+					return;
+				}
+				*/				
+				//childWin = window.open("http://localhost:8080", "name", "location=no,fullscreen=yes,toolbar=no,scrollbars=yes,resizable=yes,modal=yes" + ",width="+screen.availWidth+",height="+screen.availHeight);
+				childWin = window.open("https://www.w3schools.com", "name", "location=yes,fullscreen=no,toolbar=no,scrollbars=yes,resizable=yes,modal=yes" + ",width="+screen.availWidth+",height="+screen.availHeight);
+				$.blockUI();
+				interval = window.setInterval(checkClosedAndUnblock, 500);
+			}
+			
+		</script>
+		
+		
+	</head>
+	<body>
+		<input type="button" value="Open Modal" onclick="openModal()" />
+	</body>
+</html>
