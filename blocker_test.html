@@ -1,0 +1,58 @@
+<html>
+
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+
+var timeout = null;
+
+function onClickHandler() {
+	$.post( "test.json", function( data ) {
+		alert( "Data Loaded: " + data );
+	}).always(function() {
+		var delay = 0;
+		try {
+			delay = parseInt(document.getElementById("delay").value);
+		} catch(e) {
+			delay = 1000;
+			document.getElementById("delay").value = delay;
+		}
+		timeout = window.setTimeout(launchPopup, delay);
+		
+  });
+
+	/*
+	 $.get("test.json", function (data) {
+		alert("Success");
+        var url = document.getElementById("url").value;
+		var win = window.open(url, 'VOS');
+    });
+	*/
+	
+}
+
+function launchPopup() {
+	clearTimeout(timeout);
+	var url = document.getElementById("url").value;
+	var win = window.open(url, 'VOS');	
+}
+
+</script>
+
+</head>
+
+<body>
+
+	<form>
+		<!--<input type="text" id="url" name="url" value="https://newpos.vodafone.ro/cas/login?service="> -->
+		URL to OPEN<input type="text" id="url" name="url" value="https://www.google.com/">
+		<br/>
+		DELAY<input type="text" id="delay" name="delay" value="5000">
+		<br/>
+		<input type="button" onclick="onClickHandler();" value="Launch URL With Delay">
+	</form>
+</body>
+
+</html>
